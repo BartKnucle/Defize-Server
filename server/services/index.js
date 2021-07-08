@@ -1,7 +1,7 @@
 const management = require('./management')
-const games = require('./games')
+const game = require('./game')
 
 module.exports = function (app) {
   app.configure(management)
-  app.configure(games)
+  app.configure(game)
 }

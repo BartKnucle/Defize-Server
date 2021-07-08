@@ -1,5 +1,3 @@
-const sendResult = require('../../../hooks/sendResult')
-
 module.exports = {
   before: {
     all: [],
@@ -13,11 +11,11 @@ module.exports = {
 
   after: {
     all: [],
-    find: [sendResult],
-    get: [sendResult],
-    create: [sendResult],
-    update: [sendResult],
-    patch: [sendResult],
+    find: [],
+    get: [],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 

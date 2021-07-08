@@ -12,6 +12,19 @@
         v-text="title"
       />
       <v-spacer />
+      <v-btn
+        color="secondary"
+        rounded
+        to="/game"
+      >
+        <v-icon
+          dark
+          left
+        >
+          mdi-gamepad
+        </v-icon>
+        Game
+      </v-btn>
       <funkysheep-menu-item
         v-for="(menu, i) in menus"
         :key="i"
@@ -104,24 +117,6 @@ export default {
       drawer: false,
       fixed: false,
       menus: [
-        {
-          icon: 'mdi-apps',
-          title: 'Examples',
-          items: [
-            {
-              title: 'Nickname',
-              to: '/games/nickname'
-            },
-            {
-              title: 'Color Picker',
-              to: '/games/colorpicker'
-            },
-            {
-              title: 'Movements',
-              to: '/games/movements'
-            }
-          ]
-        },
         {
           icon: 'mdi-chart-bubble',
           title: 'Management',

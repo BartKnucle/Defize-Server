@@ -13,9 +13,9 @@ module.exports = {
 
   after: {
     all: [],
-    find: [],
+    find: [sendResult],
     get: [],
-    create: [sendResult],
+    create: [],
     update: [],
     patch: [],
     remove: []

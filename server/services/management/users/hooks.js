@@ -18,6 +18,8 @@ async function create (context) {
         if (context.data.login !== 'admin') {
           context.data.admin = false
           context.data.nickname = ''
+          context.data.latitude = 0
+          context.data.longitude = 0
         } else {
           context.data.admin = true
           context.data.nickname = 'Administrator'
@@ -30,29 +32,26 @@ async function create (context) {
     })
 }
 
-function setUserToConnection (context) {
-  if (context.params.socket) {
-    context.app.service('/api/management/connections').get(context.params.socket)
-      .then((connection) => {
-        if (connection.user === '') {
-          context.app.service('/api/management/connections').patch(connection._id, {
-            user: context.id
-          })
-        }
-      })
+function sendUserBack (context) {
+  const message = {
+    method: context.method,
+    service: '/' + context.path
   }
 
-  return context
+  if (context.result) {
+    message.data = context.data
+    context.app.service('/api/management/messages').sendToUser(context.result._id, message, context.params.socket)
+  }
 }
 
 module.exports = {
   before: {
     all: [],
-    find: [setUserToConnection],
-    get: [setUserToConnection],
-    create: [create, hashPassword('password'), setUserToConnection],
-    update: [hashPassword('password'), setUserToConnection],
-    patch: [hashPassword('password'), setUserToConnection],
+    find: [],
+    get: [],
+    create: [create, hashPassword('password')],
+    update: [hashPassword('password')],
+    patch: [hashPassword('password')],
     remove: []
   },
 
@@ -61,8 +60,8 @@ module.exports = {
     find: [sendResult],
     get: [sendResult],
     create: [sendResult],
-    update: [sendResult],
-    patch: [sendResult],
+    update: [sendResult, sendUserBack],
+    patch: [sendResult, sendUserBack],
     remove: []
   },
 

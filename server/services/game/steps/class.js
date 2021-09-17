@@ -1,3 +1,3 @@
 const ServiceClass = require('../../service.class')
 
-exports.Hunts = class Hunts extends ServiceClass {}
+exports.Steps = class Steps extends ServiceClass {}

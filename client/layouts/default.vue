@@ -132,6 +132,14 @@ export default {
             {
               title: 'Messages',
               to: '/management/messages'
+            },
+            {
+              title: 'Hunts',
+              to: '/management/hunts'
+            },
+            {
+              title: 'Steps',
+              to: '/management/steps'
             }
           ]
         }

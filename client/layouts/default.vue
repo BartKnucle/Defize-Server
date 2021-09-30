@@ -119,27 +119,31 @@ export default {
       menus: [
         {
           icon: 'mdi-chart-bubble',
-          title: 'Management',
+          title: 'System',
           items: [
             {
+              title: 'Services',
+              to: '/system/services'
+            },
+            {
               title: 'Connections',
-              to: '/management/connections'
+              to: '/system/connections'
             },
             {
               title: 'Users',
-              to: '/management/users'
+              to: '/system/users'
             },
             {
               title: 'Messages',
-              to: '/management/messages'
+              to: '/system/messages'
             },
             {
               title: 'Hunts',
-              to: '/management/hunts'
+              to: '/system/hunts'
             },
             {
               title: 'Steps',
-              to: '/management/steps'
+              to: '/system/steps'
             }
           ]
         }
@@ -148,6 +152,7 @@ export default {
       mobileMenu: false,
       title: 'Funky Sheep Studio Server'
     }
-  }
+  },
+  mounted () {}
 }
 </script>

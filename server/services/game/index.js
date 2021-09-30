@@ -1,5 +1,5 @@
-const hunts = require('./hunts/service')
-const steps = require('./steps/service')
+const hunts = require('./hunts')
+const steps = require('./steps')
 
 module.exports = function (app) {
   app.configure(hunts)

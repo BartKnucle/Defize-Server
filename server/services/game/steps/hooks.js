@@ -1,4 +1,6 @@
 const sendResult = require('../../../hooks/sendResult')
+const sendEveryone = require('../../../hooks/sendEveryone')
+
 
 module.exports = {
   before: {
@@ -14,10 +16,10 @@ module.exports = {
   after: {
     all: [],
     find: [sendResult],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
+    get: [sendResult],
+    create: [sendEveryone],
+    update: [sendEveryone],
+    patch: [sendEveryone],
     remove: []
   },
 

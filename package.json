@@ -30,6 +30,7 @@
     "nedb": "^1.8.0",
     "nodemon": "^2.0.7",
     "nuxt": "^2.15.6",
+    "nuxt-leaflet": "0.0.25",
     "selfsigned": "^1.10.11"
   },
   "devDependencies": {

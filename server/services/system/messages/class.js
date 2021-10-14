@@ -35,4 +35,20 @@ exports.Service = class Service extends ServiceClass {
     //  Save the message
     this.app.service('/api/system/messages').create(msg)
   }
+
+  sendToEveryone (msg, from) {
+    this.app.service('/api/system/connections').find({
+      query: {
+        type: 'game',
+        _id: {
+          $ne: from
+        }
+      }
+    })
+      .then((connections) => {
+        connections.data.forEach((connection) => {
+          this.sendToSocket(connection._id, msg, from)
+        })
+      })
+  }
 }

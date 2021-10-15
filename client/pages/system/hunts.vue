@@ -17,10 +17,13 @@
       </template>
     </v-data-table>
     <v-data-table
+      :items="hunts_players().data"
+      :headers="hunts_playersHeaders"
+    />
+    <v-data-table
       :items="steps().data"
       :headers="stepsHeaders"
-    >
-    </v-data-table>
+    />
     <div id="map-wrap" style="height: 400px; width: 400px">
       <client-only>
         <l-map @click="mapClick" ref="myMap" :zoom=13 :center="[44.63834,4.37998]">
@@ -33,6 +36,18 @@
             :draggable="true"
             @dragend= "markerMove(step, $event)"
           />
+          <l-marker
+            v-for="players in hunts_players().data"
+            :key="players._id"
+            :lat-lng="[players.latitude, players.longitude]"
+          >
+            <l-icon
+              class-name="someExtraClass"
+              icon-size="[0.1, 0.1]"
+            >
+              <img src="/img/Logo-Head-Mini.png">
+            </l-icon>
+          </l-marker>
         </l-map>
       </client-only>
       {{ markerLatLng }}
@@ -61,6 +76,7 @@ export default {
   },
   computed: {
     ...mapGetters('/api/game/hunts', { hunts: 'find', get: 'get' }),
+    ...mapGetters('/api/game/hunts_players', { hunts_players: 'find', get: 'get' }),
     ...mapGetters('/api/game/steps', { steps: 'find', get: 'get' }),
     huntsHeaders () {
       return [
@@ -75,6 +91,26 @@ export default {
         {
           text: 'Remove',
           value: 'remove'
+        }
+      ]
+    },
+    hunts_playersHeaders () {
+      return [
+        {
+          text: 'ID',
+          value: '_id'
+        },
+        {
+          text: 'Latitude',
+          value: 'latitude'
+        },
+        {
+          text: 'longitude',
+          value: 'longitude'
+        },
+        {
+          text: 'Altitude',
+          value: 'altitude'
         }
       ]
     },
@@ -105,10 +141,12 @@ export default {
   },
   mounted () {
     this.findHunts()
+    this.findHunts_players()
     this.findSteps()
   },
   methods: {
     ...mapActions('/api/game/hunts', { findHunts: 'find', patch: 'patch', remove: 'remove' }),
+    ...mapActions('/api/game/hunts_players', { findHunts_players: 'find' }),
     ...mapActions('/api/game/steps', { findSteps: 'find', patchStep: 'patch', removeStep: 'remove' }),
     admin (_id, admin) {
       this.patch([

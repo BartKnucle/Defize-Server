@@ -20,6 +20,7 @@
     "@feathersjs/express": "^4.5.11",
     "@feathersjs/socketio": "^4.5.11",
     "@feathersjs/socketio-client": "^4.5.11",
+    "@mdi/js": "^6.3.95",
     "@vue/composition-api": "^0.6.7",
     "core-js": "^3.13.1",
     "cross-env": "^7.0.3",
@@ -31,7 +32,8 @@
     "nodemon": "^2.0.7",
     "nuxt": "^2.15.6",
     "nuxt-leaflet": "0.0.25",
-    "selfsigned": "^1.10.11"
+    "selfsigned": "^1.10.11",
+    "vue2-leaflet-rotatedmarker": "^1.0.9"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.1",

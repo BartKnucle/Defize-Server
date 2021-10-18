@@ -26,50 +26,64 @@
     />
     <div id="map-wrap" style="height: 400px; width: 400px">
       <client-only>
-        <l-map @click="mapClick" ref="myMap" :zoom=13 :center="[44.63834,4.37998]">
-          <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+        <l-map
+          ref="myMap"
+          :zoom="13"
+          :center="[44.63834,4.37998]"
+          @click="mapClick"
+        >
+          <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <l-marker
             v-for="step in steps().data"
             :key="step._id"
             :lat-lng="[step.latitude, step.longitude]"
             :title="step.name"
             :draggable="true"
-            @dragend= "markerMove(step, $event)"
+            @dragend="markerMove(step, $event)"
           />
-          <l-marker
+          <v-rotated-marker
             v-for="players in hunts_players().data"
             :key="players._id"
             :lat-lng="[players.latitude, players.longitude]"
+            :rotation-angle="players.heading"
           >
             <l-icon
-              class-name="someExtraClass"
-              icon-size="[0.1, 0.1]"
+              :iconSize="[30, 30]"
+              :iconAnchor="[20, 20]"
             >
-              <img src="/img/Logo-Head-Mini.png">
+              <v-icon
+                size="30px"
+                class="userClass"
+                color="orange"
+              >
+                {{ svgPath }}
+              </v-icon>
             </l-icon>
-          </l-marker>
+          </v-rotated-marker>
         </l-map>
       </client-only>
-      {{ markerLatLng }}
     </div>
   </section>
 </template>
 <script>
-//  import L from 'leaflet'
+import Vue2LeafletRotatedMarker from 'vue2-leaflet-rotatedmarker'
+import { mdiNavigation } from '@mdi/js'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker
+    LMarker,
+    'v-rotated-marker': Vue2LeafletRotatedMarker
   },
   data () {
     return {
+      svgPath: mdiNavigation,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      zoom: 15,
+      zoom: 20,
       center: [44.63841, 4.3801],
       markerLatLng: [44.63841, 4.3801]
     }
@@ -111,6 +125,10 @@ export default {
         {
           text: 'Altitude',
           value: 'altitude'
+        },
+        {
+          text: 'Heading',
+          value: 'heading'
         }
       ]
     },
@@ -176,4 +194,26 @@ export default {
 }
 </script>
 <style>
+  .userClass
+  {
+    font-size: 30px;
+    background:red;
+    border:5px solid rgba(255,255,255,0.5);
+    color:blue;
+    font-weight:bold;
+    text-align:center;
+    border-radius:50%;
+    line-height:30px;
+    vertical-align: left;
+  }
+
+  .triangle-code
+  {
+    display : inline-block;
+    height : 0;
+    width : 0;
+    border-right : 1em solid transparent;
+    border-bottom : 2em solid red;
+    border-left : 1em solid transparent;
+  }
 </style>

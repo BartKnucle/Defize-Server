@@ -20,14 +20,14 @@
       :items="hunts_players().data"
       :headers="hunts_playersHeaders"
     />
-    <v-data-table
-      :items="steps().data"
-      :headers="stepsHeaders"
+    <funkysheep-service
+      service="/api/game/steps"
     />
-    <div id="map-wrap" style="height: 400px; width: 400px">
+    <div id="map-wrap" style="height: 600px; width: 800px">
       <client-only>
         <l-map
           ref="myMap"
+          :maxZoom="100"
           :zoom="13"
           :center="[44.63834,4.37998]"
           @click="mapClick"
@@ -40,12 +40,14 @@
             :title="step.name"
             :draggable="true"
             @dragend="markerMove(step, $event)"
-          />
+          >
+            <l-tooltip>{{ step.name }}</l-tooltip>
+          </l-marker>
           <v-rotated-marker
-            v-for="players in hunts_players().data"
-            :key="players._id"
-            :lat-lng="[players.latitude, players.longitude]"
-            :rotation-angle="players.heading"
+            v-for="player in hunts_players().data"
+            :key="player._id"
+            :lat-lng="[player.latitude, player.longitude]"
+            :rotation-angle="player.heading"
           >
             <l-icon
               :iconSize="[30, 30]"
@@ -59,6 +61,7 @@
                 {{ svgPath }}
               </v-icon>
             </l-icon>
+            <l-tooltip>{{ player.nickname }}</l-tooltip>
           </v-rotated-marker>
         </l-map>
       </client-only>

@@ -35,8 +35,8 @@ export default {
           value: '_id'
         },
         {
-          text: 'Hunt ID',
-          value: 'hunt_id'
+          text: 'Quest ID',
+          value: 'quest_id'
         },
         {
           text: 'Name',

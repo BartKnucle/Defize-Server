@@ -138,8 +138,8 @@ export default {
               to: '/system/messages'
             },
             {
-              title: 'Hunts',
-              to: '/system/hunts'
+              title: 'Quests',
+              to: '/system/quests'
             },
             {
               title: 'Steps',

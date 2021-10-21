@@ -1,9 +1,9 @@
-const hunts = require('./hunts')
-const hunts_players = require('./hunts_players')
+const quests = require('./quests')
+const quest_players = require('./quest_players')
 const steps = require('./steps')
 
 module.exports = function (app) {
-  app.configure(hunts)
-  app.configure(hunts_players)
+  app.configure(quests)
+  app.configure(quest_players)
   app.configure(steps)
 }

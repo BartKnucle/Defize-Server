@@ -1,38 +1,33 @@
 <template>
   <section>
-    <v-data-table
-      :items="hunts().data"
-      :headers="huntsHeaders"
-    >
-      <template #[`item.remove`]="{ item }">
-        <v-btn
-          @click="remove(item._id)"
-        >
-          <v-icon
-            color="red"
-          >
-            mdi-delete
-          </v-icon>
-        </v-btn>
-      </template>
-    </v-data-table>
-    <v-data-table
-      :items="hunts_players().data"
-      :headers="hunts_playersHeaders"
+    <funkysheep-service
+      service="/api/game/quests"
+      hide-fields
+    />
+    <funkysheep-service
+      service="/api/game/quest_players"
+      hide-fields
     />
     <funkysheep-service
       service="/api/game/steps"
+      hide-fields
     />
-    <div id="map-wrap" style="height: 600px; width: 800px">
+    <div id="map-wrap" style="height: 400px; width: 800px">
       <client-only>
         <l-map
           ref="myMap"
-          :maxZoom="100"
           :zoom="13"
+          :max-zoom="50"
           :center="[44.63834,4.37998]"
           @click="mapClick"
         >
-          <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+          <l-tile-layer
+            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+            :options="{
+              maxZoom:50,
+              maxNativeZoom:19
+            }"
+          />
           <l-marker
             v-for="step in steps().data"
             :key="step._id"
@@ -44,14 +39,14 @@
             <l-tooltip>{{ step.name }}</l-tooltip>
           </l-marker>
           <v-rotated-marker
-            v-for="player in hunts_players().data"
+            v-for="player in quests_players().data"
             :key="player._id"
             :lat-lng="[player.latitude, player.longitude]"
             :rotation-angle="player.heading"
           >
             <l-icon
-              :iconSize="[30, 30]"
-              :iconAnchor="[20, 20]"
+              :icon-size="[30, 30]"
+              :icon-anchor="[20, 20]"
             >
               <v-icon
                 size="30px"
@@ -92,10 +87,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('/api/game/hunts', { hunts: 'find', get: 'get' }),
-    ...mapGetters('/api/game/hunts_players', { hunts_players: 'find', get: 'get' }),
+    ...mapGetters('/api/game/quests', { quests: 'find', get: 'get' }),
+    ...mapGetters('/api/game/quest_players', { quests_players: 'find', get: 'get' }),
     ...mapGetters('/api/game/steps', { steps: 'find', get: 'get' }),
-    huntsHeaders () {
+    questsHeaders () {
       return [
         {
           text: 'ID',
@@ -111,7 +106,7 @@ export default {
         }
       ]
     },
-    hunts_playersHeaders () {
+    quests_playersHeaders () {
       return [
         {
           text: 'ID',
@@ -161,13 +156,13 @@ export default {
     }
   },
   mounted () {
-    this.findHunts()
-    this.findHunts_players()
+    this.findQuests()
+    this.findQuest_players()
     this.findSteps()
   },
   methods: {
-    ...mapActions('/api/game/hunts', { findHunts: 'find', patch: 'patch', remove: 'remove' }),
-    ...mapActions('/api/game/hunts_players', { findHunts_players: 'find' }),
+    ...mapActions('/api/game/quests', { findQuests: 'find', patch: 'patch', remove: 'remove' }),
+    ...mapActions('/api/game/quest_players', { findQuest_players: 'find' }),
     ...mapActions('/api/game/steps', { findSteps: 'find', patchStep: 'patch', removeStep: 'remove' }),
     admin (_id, admin) {
       this.patch([
@@ -181,9 +176,7 @@ export default {
         { admin }
       ])
     },
-    mapClick (event) {
-      console.log(event)
-    },
+    mapClick (event) {},
     markerMove (step, event) {
       this.patchStep([
         step._id,

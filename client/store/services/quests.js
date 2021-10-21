@@ -4,7 +4,7 @@ import {
   BaseModel
 } from '../../plugins/feather'
 
-const serviceName = '/api/game/hunts_players'
+const serviceName = '/api/game/quests'
 
 // Extend the base class
 class Model extends BaseModel {

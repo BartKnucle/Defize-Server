@@ -20,7 +20,7 @@ module.exports = {
     create: [sendResult, sendEveryone],
     update: [sendResult, sendEveryone],
     patch: [sendResult, sendEveryone],
-    remove: []
+    remove: [sendResult, sendEveryone]
   },
 
   error: {

@@ -9,6 +9,10 @@
       hide-fields
     />
     <funkysheep-service
+      service="/api/game/quest_paths"
+      hide-fields
+    />
+    <funkysheep-service
       service="/api/game/steps"
       hide-fields
     />
@@ -37,6 +41,14 @@
             @dragend="markerMove(step, $event)"
           >
             <l-tooltip>{{ step.name }}</l-tooltip>
+          </l-marker>
+          <l-marker
+            v-for="point in quest_paths().data"
+            :key="point._id"
+            :lat-lng="[point.latitude, point.longitude]"
+            :title="point._id"
+          >
+            <l-tooltip>{{ point._id }}</l-tooltip>
           </l-marker>
           <v-rotated-marker
             v-for="player in quests_players().data"
@@ -89,6 +101,7 @@ export default {
   computed: {
     ...mapGetters('/api/game/quests', { quests: 'find', get: 'get' }),
     ...mapGetters('/api/game/quest_players', { quests_players: 'find', get: 'get' }),
+    ...mapGetters('/api/game/quest_paths', { quest_paths: 'find', get: 'get' }),
     ...mapGetters('/api/game/steps', { steps: 'find', get: 'get' }),
     questsHeaders () {
       return [
@@ -158,11 +171,13 @@ export default {
   mounted () {
     this.findQuests()
     this.findQuest_players()
+    this.findQuest_paths()
     this.findSteps()
   },
   methods: {
     ...mapActions('/api/game/quests', { findQuests: 'find', patch: 'patch', remove: 'remove' }),
     ...mapActions('/api/game/quest_players', { findQuest_players: 'find' }),
+    ...mapActions('/api/game/quest_paths', { findQuest_paths: 'find' }),
     ...mapActions('/api/game/steps', { findSteps: 'find', patchStep: 'patch', removeStep: 'remove' }),
     admin (_id, admin) {
       this.patch([

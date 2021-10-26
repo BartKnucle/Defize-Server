@@ -16,6 +16,10 @@
       service="/api/game/steps"
       hide-fields
     />
+    <funkysheep-service
+      service="/api/game/points_clouds"
+      hide-fields
+    />
     <div id="map-wrap" style="height: 400px; width: 800px">
       <client-only>
         <l-map

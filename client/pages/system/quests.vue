@@ -49,10 +49,22 @@
           <l-marker
             v-for="point in quest_paths().data"
             :key="point._id"
-            :lat-lng="[point.latitude, point.longitude]"
+            :lat-lng="[point.virtual_latitude, point.virtual_longitude]"
             :title="point._id"
           >
             <l-tooltip>{{ point._id }}</l-tooltip>
+            <l-icon
+              :icon-size="[30, 30]"
+              :icon-anchor="[20, 20]"
+            >
+              <v-icon
+                size="20px"
+                class="pathClass"
+                color="yellow"
+              >
+                {{ svgPath }}
+              </v-icon>
+            </l-icon>
           </l-marker>
           <v-rotated-marker
             v-for="player in quests_players().data"
@@ -67,9 +79,9 @@
               <v-icon
                 size="30px"
                 class="userClass"
-                color="orange"
+                color="blue"
               >
-                {{ svgPath }}
+                {{ svgUser }}
               </v-icon>
             </l-icon>
             <l-tooltip>{{ player.nickname }}</l-tooltip>
@@ -81,7 +93,7 @@
 </template>
 <script>
 import Vue2LeafletRotatedMarker from 'vue2-leaflet-rotatedmarker'
-import { mdiNavigation } from '@mdi/js'
+import { mdiNavigation, mdiAdjust } from '@mdi/js'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import { mapActions, mapGetters } from 'vuex'
 export default {
@@ -93,7 +105,8 @@ export default {
   },
   data () {
     return {
-      svgPath: mdiNavigation,
+      svgUser: mdiNavigation,
+      svgPath: mdiAdjust,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -212,8 +225,21 @@ export default {
   .userClass
   {
     font-size: 30px;
-    background:red;
-    border:5px solid rgba(255,255,255,0.5);
+    background:transparent;
+    border:2px solid #2196F3;
+    color:blue;
+    font-weight:bold;
+    text-align:center;
+    border-radius:50%;
+    line-height:30px;
+    vertical-align: left;
+  }
+
+  .pathClass
+  {
+    font-size: 30px;
+    background:transparent;
+    border:2px solid #FFEB3B;
     color:blue;
     font-weight:bold;
     text-align:center;

@@ -12,8 +12,11 @@ module.exports = (app) => {
   const options = {
     _id: api,
     Model: createModel(app),
-    paginate: app.get('paginate'),
-    multi: true
+    multi: true,
+    paginate: {
+      default: 100000,
+      max: 100000
+    }
   }
 
   app.use(options._id, new Service(options, app))

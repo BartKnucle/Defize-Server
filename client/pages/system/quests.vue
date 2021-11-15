@@ -39,7 +39,7 @@
           <l-marker
             v-for="step in steps().data"
             :key="step._id"
-            :lat-lng="[step.latitude, step.longitude]"
+            :lat-lng="[step.latitude.toString(), step.longitude.toString()]"
             :title="step.name"
             :draggable="true"
             @dragend="markerMove(step, $event)"
@@ -49,7 +49,7 @@
           <l-marker
             v-for="point in quest_paths().data"
             :key="point._id"
-            :lat-lng="[point.virtual_latitude, point.virtual_longitude]"
+            :lat-lng="[point.virtual_latitude.toString(), point.virtual_longitude.toString()]"
             :title="point._id"
           >
             <l-tooltip>{{ point._id }}</l-tooltip>
@@ -69,7 +69,7 @@
           <v-rotated-marker
             v-for="player in quests_players().data"
             :key="player._id"
-            :lat-lng="[player.latitude, player.longitude]"
+            :lat-lng="[player.latitude.toString(), player.longitude.toString()]"
             :rotation-angle="player.heading"
           >
             <l-icon

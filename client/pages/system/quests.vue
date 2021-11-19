@@ -232,7 +232,6 @@ export default {
     text-align:center;
     border-radius:50%;
     line-height:30px;
-    vertical-align: left;
   }
 
   .pathClass
@@ -245,7 +244,6 @@ export default {
     text-align:center;
     border-radius:50%;
     line-height:30px;
-    vertical-align: left;
   }
 
   .triangle-code
